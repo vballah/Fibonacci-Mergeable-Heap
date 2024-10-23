@@ -1,4 +1,5 @@
 from fibtree import Fibtree
+
 class Node:
     def __init__(self,key, priority):  
         self.key = key 
