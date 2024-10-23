@@ -20,7 +20,7 @@ This project is particularly useful in pathfinding algorithms, such as A* and Di
 For example, to travel from source A to destination H, the algorithm evaluates the cost of the cheapest intermediate nodes and selects the best option. By using a Fibonacci Mergeable Heap, these algorithms can run more efficiently, especially in scenarios involving dynamic graphs where frequent updates to paths occur.
 
 ## Function Overview
-Insert(H, x): This function inserts node x into the heap. If x has the smallest priority compared to all other nodes in the heap, it becomes the new minimum node.
+- Insert(H, x): This function inserts node x into the heap. If x has the smallest priority compared to all other nodes in the heap, it becomes the new minimum node.
 FindMinimum(H): Retrieves the node with the minimum priority without removing it from the heap.
 ExtractMinimum(H): Removes and returns the node with the smallest key from the heap. This operation uses an array and a CDLL to manage the degree of nodes, maintaining the min-heap order.
 Union(H1, H2): Combines two heaps, H1 and H2, into a single heap.
