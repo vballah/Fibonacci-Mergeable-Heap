@@ -4,7 +4,7 @@ The Fibonacci Mergeable Heap is a min-ordered heap that implements a priority qu
 ## Description
 The project implements a Fibonacci Mergeable Heap, which maintains a min-ordered structure.
 
-## Key Operations of the project includes:
+### Key Operations of the project includes:
 
 - Insert: Nodes can only be added to the root list if they have the smallest priority compared to all other nodes in the heap.
 - FindMinimum: Retrieves the node with the minimum priority without removing it from the heap.
