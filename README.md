@@ -8,10 +8,10 @@ The project implements a Fibonacci Mergeable Heap, which maintains a min-ordered
 
 - Insert: Nodes can only be added to the root list if they have the smallest priority compared to all other nodes in the heap.
 - FindMinimum: Retrieves the node with the minimum priority without removing it from the heap.
-ExtractMinimum: This operation retrieves and removes the node with the minimum priority. It utilizes an array and a Circular Doubly Linked List (CDLL) to manage the degree of each node, enforcing the min-heap order, which is vital for the integrity of the data structure.
-Union (Merge): Combines two Fibonacci heaps into one, maintaining the min-ordered structure.
-DecreaseKey: Allows for updating the priority of a specific node efficiently.
-DeleteKey: Removes a specified node from the heap, adjusting the structure as needed.
+- ExtractMinimum: This operation retrieves and removes the node with the minimum priority. It utilizes an array and a Circular Doubly Linked List (CDLL) to manage the degree of each node, enforcing the min-heap order, which is vital for the integrity of the data structure.
+- Union (Merge): Combines two Fibonacci heaps into one, maintaining the min-ordered structure.
+- DecreaseKey: Allows for updating the priority of a specific node efficiently.
+- DeleteKey: Removes a specified node from the heap, adjusting the structure as needed.
 Each tree in the forest contains at least one minimum node that is part of the root list. The root list (heap) is managed using a Circular Doubly Linked List, enabling efficient insertions and deletions.
 
 ## Why the Project is Useful
