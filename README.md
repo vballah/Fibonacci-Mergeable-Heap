@@ -1,7 +1,13 @@
 # Fibonacci Mergeable Heap
-The Fibonacci Mergeable Heap is a min-ordered heap that implements a priority queue, where the keys are characters and the values are numbers. This data structure consists of a collection of trees (a forest), where each node can have children (with defined degrees and edges) or exist as a singleton tree within the heap.
 
 ## Description
+The Fibonacci Mergeable Heap is a min-ordered heap that implements a priority queue, where the keys are characters and the values are numbers. This data structure consists of a collection of trees (a forest), where each node can have children (with defined degrees and edges) or exist as a singleton tree within the heap.
+
+
+
+
+
+
 The project implements a Fibonacci Mergeable Heap, which maintains a min-ordered structure.
 
 Key Operations of the project includes:
