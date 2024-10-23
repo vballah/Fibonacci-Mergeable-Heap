@@ -6,18 +6,25 @@ from fibtree import Fibtree
 
 
 class FibHeap:
+     """
+        A class representing a Fibonacci heap data structure.
+
+        This implementation supports efficient priority queue operations, including insertion,
+        extraction of the minimum element, and merging of heaps. It utilizes a collection of 
+        trees and maintains the Fibonacci heap properties.
+
+        Attributes:
+            mMinimum (Node): The minimum node in the Fibonacci heap.
+            rootlist (Fibtree): The root list containing trees of the heap.
+            node_count (int): The total number of nodes in the heap.
+    """
     def __init__(self):
-        #minimum node of the fibonacci heap
+        # Initialize the Fibonacci heap with no minimum node, an empty root list, and zero node count
         self.mMinimum = None   
-        self.rootlist = Fibtree()
+        self.rootlist = Fibtree() # The root list is managed as a forest of Fibonacci trees
         self.node_count = 0
 
 
-    #inserts a node in the rootlist if empty, it creates a singleton tree
-    #if not empty, 
-    # the value of the new node is compare with the value of the current node
-    # if the value of the current node is less than the value of the new node
-    # the new min stays the same, else the new minimumis the new node .
     def insert(self, key, priority):
         priority = self.checkPriority(priority) 
         new_node =  Node(key,priority)
