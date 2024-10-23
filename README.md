@@ -6,8 +6,8 @@ The project implements a Fibonacci Mergeable Heap, which maintains a min-ordered
 
 ## Key Operations of the project includes:
 
-- [Insert: Nodes can only be added to the root list if they have the smallest priority compared to all other nodes in the heap.]
-FindMinimum: Retrieves the node with the minimum priority without removing it from the heap.
+- Insert: Nodes can only be added to the root list if they have the smallest priority compared to all other nodes in the heap.
+- FindMinimum: Retrieves the node with the minimum priority without removing it from the heap.
 ExtractMinimum: This operation retrieves and removes the node with the minimum priority. It utilizes an array and a Circular Doubly Linked List (CDLL) to manage the degree of each node, enforcing the min-heap order, which is vital for the integrity of the data structure.
 Union (Merge): Combines two Fibonacci heaps into one, maintaining the min-ordered structure.
 DecreaseKey: Allows for updating the priority of a specific node efficiently.
