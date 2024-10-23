@@ -21,14 +21,14 @@ For example, to travel from source A to destination H, the algorithm evaluates t
 
 ## Function Overview
 - Insert(H, x): This function inserts node x into the heap. If x has the smallest priority compared to all other nodes in the heap, it becomes the new minimum node.
-FindMinimum(H): Retrieves the node with the minimum priority without removing it from the heap.
-ExtractMinimum(H): Removes and returns the node with the smallest key from the heap. This operation uses an array and a CDLL to manage the degree of nodes, maintaining the min-heap order.
-Union(H1, H2): Combines two heaps, H1 and H2, into a single heap.
-DecreaseKey(H, x, newPriority): Decreases the priority of node x to a new priority value.
-DeleteKey(H, x): Removes the specified node x from the heap, adjusting the structure accordingly.
+- FindMinimum(H): Retrieves the node with the minimum priority without removing it from the heap.
+- ExtractMinimum(H): Removes and returns the node with the smallest key from the heap. This operation uses an array and a CDLL to manage the degree of nodes, maintaining the min-heap order.
+- Union(H1, H2): Combines two heaps, H1 and H2, into a single heap.
+- DecreaseKey(H, x, newPriority): Decreases the priority of node x to a new priority value.
+- DeleteKey(H, x): Removes the specified node x from the heap, adjusting the structure accordingly.
 
 ## Time Complexities
-Operation	Amortized Time Complexity
+### Operation	Amortized Time Complexity
 Insert	O(1)
 FindMinimum	O(1)
 ExtractMinimum	O(log n)
