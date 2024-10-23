@@ -29,12 +29,12 @@ For example, to travel from source A to destination H, the algorithm evaluates t
 
 ## Time Complexities
 ### Operation	Amortized Time Complexity
-Insert	O(1)
-FindMinimum	O(1)
-ExtractMinimum	O(log n)
-Union	O(1)
-DecreaseKey	O(1)
-DeleteKey	O(log n)
+- Insert	O(1)
+- FindMinimum	O(1)
+- ExtractMinimum	O(log n)
+- Union	O(1)
+- DecreaseKey	O(1)
+- DeleteKey	O(log n)
 
 
 
