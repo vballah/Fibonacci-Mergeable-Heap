@@ -1,9 +1,11 @@
 # Fibonacci Mergeable Heap
 The Fibonacci Mergeable Heap is a min-ordered heap that implements a priority queue, where the keys are characters and the values are numbers. This data structure consists of a collection of trees (a forest), where each node can have children (with defined degrees and edges) or exist as a singleton tree within the heap.
 
-## What the Project Does
-Data Structure: The project implements a Fibonacci Mergeable Heap, which maintains a min-ordered structure.
-Key Operations:
+## Description
+The project implements a Fibonacci Mergeable Heap, which maintains a min-ordered structure.
+
+Key Operations of the project includes:
+
 Insert: Nodes can only be added to the root list if they have the smallest priority compared to all other nodes in the heap.
 FindMinimum: Retrieves the node with the minimum priority without removing it from the heap.
 ExtractMinimum: This operation retrieves and removes the node with the minimum priority. It utilizes an array and a Circular Doubly Linked List (CDLL) to manage the degree of each node, enforcing the min-heap order, which is vital for the integrity of the data structure.
