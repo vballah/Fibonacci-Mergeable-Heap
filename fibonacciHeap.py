@@ -45,6 +45,7 @@ class FibHeap:
         Returns:
             Node: The newly created node.
         """
+        self.check(key)
         # Check if the key is already in the heap
         if key in self.key_set:
             raise ValueError(f"Duplicate key '{key}' is not allowed.")
@@ -65,6 +66,24 @@ class FibHeap:
         self.node_count += 1
         print(f"Inserted {key} with priority {priority}. Total nodes: {self.node_count}")
         return new_node
+
+    def checkKey(self, key):
+        """
+        Checks if the provided key is a single character.
+
+        Args:
+            key: The key to be validated.
+
+        Raises:
+            ValueError: If the key is not a single character.
+    
+        Returns:
+            bool: True if the key is valid, otherwise raises ValueError.
+         """
+        if not isinstance(key, str) or len(key) != 1:
+            raise ValueError(f"Invalid key '{key}'. Key must be a single character.")
+        return True  
+    
          
     #check priority
     def checkPriority(self, priority):
