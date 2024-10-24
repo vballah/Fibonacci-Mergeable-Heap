@@ -27,22 +27,23 @@ class FibHeap:
 
     def insert(self, key, priority):
         """
-            Inserts a new node into the Fibonacci heap.
+        Inserts a new node into the Fibonacci heap.
 
-            This method adds a node with the specified key and priority. If the heap is empty,
-            it creates a singleton tree. Otherwise, it compares the new node's priority with the
-            current minimum and updates the minimum if necessary.
+        This method adds a node with the specified key and priority. If the heap is empty,
+        it creates a singleton tree. Otherwise, it compares the new node's priority with the
+        current minimum and updates the minimum if necessary.
 
-            Args:
-                key: The key associated with the node to be inserted.
-                priority (float): The priority of the node.
+        Args:
+            key: The key associated with the node to be inserted.
+            priority (float): The priority of the node.
 
-            Raises:
-                ValueError: If the provided priority is None or invalid.
+        Raises:
+            ValueError: If the provided priority is None or invalid.
 
-            Returns:
-                 Node: The newly created node.
+        Returns:
+            Node: The newly created node.
         """
+        
         priority = self.checkPriority(priority) 
         new_node =  Node(key,priority)
         
@@ -73,8 +74,18 @@ class FibHeap:
             raise ValueError(f"{priority} is invalid: cannot be NaN.")
         return priority
 
-    #check if the heap is empty in 0(1).
+
     def isEmpty(self):
+        """
+        Check if the Fibonacci heap is empty.
+
+        Returns:
+            bool: True if the heap is empty, False otherwise.
+    
+        Prints:
+            A message indicating whether the heap is empty or not.
+        """
+        
         empty = self.mMinimum is None
         if empty:
             print("the heap is empty")
@@ -83,7 +94,6 @@ class FibHeap:
         return empty
 
 
-    #the below function finds the minimum node in the heap in 0(1) time
     def getMin(self):
          """
          Retrieves the minimum node from the Fibonacci heap.
@@ -134,6 +144,15 @@ class FibHeap:
         return self
     
     def print_union(self):
+        """
+        Print the keys and priorities of the nodes in the root list of the Fibonacci heap.
+
+        This function traverses the root list and prints the priority and key of each node.
+        It uses a set to keep track of visited nodes to avoid infinite loops in case of circular references.
+
+        Returns:
+            None
+        """
         visited = set()
         current = self.rootlist.head
         while current and current not in visited:
@@ -274,19 +293,25 @@ class FibHeap:
                     self.mMinimum = trees
             
         
-                
-
-    #the following procedure extracts the minimum node 
-    # from the rootlist in the heap and adds it children
-    # to the rootlist, if it has
-    # this works by first making a root out of the minimum node children
-    # and then extracting the minimum node from the rootlist while maintaining the heap property
-    #the helper function consolidates ensure that each root elements merging in the rootlist
-    #  have distinct degree
     def extractMin(self):
+        """
+        Extracts the node with the minimum priority from the Fibonacci heap.
+        
+        This method removes the minimum node from the heap, adds its children to the root list,
+        and consolidates the heap to maintain its properties.
+
+        Raises:
+            ValueError: If the heap is empty.
+
+        Returns:
+            Node: The extracted minimum node.
+        """
+        # check if heap is empty as you cannot extract 
+        #from an empty heap
         if self.isEmpty():
             raise ValueError("Empty Heap")
-        
+
+        # ensure the element to be remove is the minimum
         minElem = self.mMinimum
       
         if minElem is not None:
@@ -295,6 +320,8 @@ class FibHeap:
                 minElem.children.add_to_root_list(child)
                 child.parent = None
                 child = child.next
+                
+                #break circular link
                 if child == minElem.children.head:
                     break
                     
@@ -311,51 +338,120 @@ class FibHeap:
         return minElem
     
     
-            
-    
-    #the following function decrease key ensures that the new  key to be
-    #inserted is less than the current key, otherwise an exception is thrown.
-    # if the node who key is to be decrease is a root and it has parent with key
-    # greater than the node, then min-heap order is violated and that node is cut from 
-    # it's parent, else the node and key is save as the new minimum
+
     def fib_decrease(self, x, priority):
+        """
+        Decreases the key (priority) of the given node x in the Fibonacci heap.
+            
+        This function ensures that the new key is less than the current key.
+        If the new key violates the min-heap property, an exception is raised.
+    
+        If the node x is a root and its parent has a key greater than x's,
+        x is cut from its parent to maintain the min-heap order. If x's new key
+        is less than the current minimum, it updates the minimum node of the heap.
+
+        Args:
+            x: The node whose key is to be decreased.
+            priority: The new priority to be assigned to node x.
+
+        Raises:
+            ValueError: If the new priority is greater than the current priority of x.
+        """
+        
+        # Check that the min-heap order property is not violated
         if priority > x.priority:
             print(f"new {priority} is greater than {x.priority}")
             return
+            
+        # Update the priority of the node if new priority is smaller
         x.priority = priority
-        y = x.parent    
+        
+        y = x.parent  
+
+        # Check if the node has a parent and if the min-heap order is violated
         if y is not None and x.priority < y.priority:
-            self.cut(x,y)
-            self.cascadingCut(y)
+            self.cut(x,y)  #Cut x from its parent
+            self.cascadingCut(y) #Perform cascading cut on the parent y
+
+         # Update the minimum node if necessary
         if x.priority < self.mMinimum.priority:
             #save x as the new heap minimum
             self.mMinimum =  x
+            
 
-    # this function removes node from the  childlist of y
-    # decrementing y degree and adding node to the rootlist.
-    # this is a helper function for decrease key as in the case where y is a 
-    # parent of node but y key is greater than node, which violates min-heap
     def cut(self, x, y):
+        """
+        Cuts node x from its parent node y in the Fibonacci heap.
+
+        This function removes node x from the child list of y, decrements the degree 
+        of y, and adds node x to the root list of the heap. This operation is performed
+        when the priority of node x is decreased and violates the min-heap property.
+
+        Args:
+            x: The node to be cut from its parent.
+            y: The parent node from which x is to be removed.
+
+        Raises:
+            ValueError: If x does not have a parent.
+        """
+        
+        # x can only be cut if it is link to another node as child
         if x.parent is None:
             raise ValueError("x does not have a parent")
+            
         #remove x from the childlist of y
         y.remove_from_childlist(x)
+        
+        # Decrement the degree of y since x is no longer a child
         y.degree -= 1
+        
+        # Add x to the root list
         self.rootlist.add_to_root_list(x)
+        
+        # Update the parent of x to None and reset the mark
         x.parent = None
         x.mark = False
 
     def cascadingCut(self, y):
+        """
+        Performs a cascading cut operation on node y in the Fibonacci heap.
+
+        This function marks node y if it is not already marked. If y is marked, 
+        it cuts y from its parent z and recursively applies cascading cut on z.
+    
+        Args:
+            y: The node to perform cascading cut on. 
+        """
+        # initialize a variable z as y parent
         z = y.parent
         if z is not None:
+            # If y is not marked, mark it. A node can be mark if it has lost a child
             if y.mark == False:
                 y.mark = True
             else:
+                # Cut y from its parent z
                 self.cut(y, z)
+                # Recursively apply cascading cut on parent z
                 self.cascadingCut(z)
 
     def delete(self, x):
+        """
+        Deletes node x from the Fibonacci heap.
+
+        This function first decreases the key of node x to positive infinity,
+        effectively making it the minimum node, and then extracts the minimum node,
+        which removes x from the heap.
+
+        Args:
+            x: The node to be deleted from the Fibonacci heap.
+    
+        Raises:
+            ValueError: If x is None or not found in the heap.
+        """
+        # Decrease the key of node x to positive infinity
         self.fib_decrease(x, math.inf("inf") )
+        
+         # Extract the minimum node, which will remove x from the heap
         self.extractMin()
         
         
