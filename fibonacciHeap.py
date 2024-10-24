@@ -114,7 +114,7 @@ class FibHeap:
         return self.mMinimum
     
    
-    def fib_Union(self, other):
+   def fib_Union(self, other):
         """
         Merges two Fibonacci heaps and returns the resulting heap.
 
@@ -124,31 +124,45 @@ class FibHeap:
         Returns:
             FibHeap: The merged Fibonacci heap.
         """
+       
         if self.mMinimum is None:
             return other
         
         if other.mMinimum is None:
            return self
-    
-
-        #link the two list in a circular fashion
+       
+        current = other.rootlist.head
+        
+        visited = set()
+       
+        while current and current not in visited:
+            if current.key in self.key_set:
+                raise ValueError(f"Dupliace key '{current.key}' found during union.")
+            
+            self.key_set.add(current.key)
+            visited.add(current)
+            current = current.next
+            if current == other.rootlist.head:
+                break
+                
+        #link the two list
         self.rootlist.last.next = other.rootlist.head
         other.rootlist.head.prev = self.rootlist.last
         self.rootlist.last = other.rootlist.last
         
         if( other.mMinimum.priority < self.mMinimum.priority):
             self.mMinimum = other.mMinimum
-
-        # increment the count of the nodes in the merge heap
+        
         self.node_count += other.node_count
         
         other.rootlist.head = None
         other.mMinimum = None
         other.node_count = 0
         
-        #return self, the new mergeable heap
+        #return the union of the two heaps
         return self
-    
+
+
     def print_union(self):
         """
         Print the keys and priorities of the nodes in the root list of the Fibonacci heap.
