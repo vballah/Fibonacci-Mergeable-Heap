@@ -335,15 +335,23 @@ class FibHeap:
         minElem = self.mMinimum
       
         if minElem is not None:
+            # Remove the key from the set
+            if minElem.key not in self.key_set:
+                print(f"DEBUG: Current key_set: {self.key_set}")
+                raise ValueError(f"Key '{minElem.key}' not found in key set during extraction.")
+
+            self.key_set.remove(minElem.key)
+            
             child = minElem.children.head
-            while child is not None:           
-                minElem.children.add_to_root_list(child)
-                child.parent = None
-                child = child.next
+            if child is not None: 
+                while True:
+                    minElem.children.add_to_root_list(child)
+                    child.parent = None
+                    child = child.next
                 
-                #break circular link
-                if child == minElem.children.head:
-                    break
+                    #break circular link
+                    if child == minElem.children.head:
+                        break
                     
             self.rootlist.remove_from_root_list(minElem)
             
