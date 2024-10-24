@@ -99,7 +99,8 @@ class FibHeap:
     
    
     def fib_Union(self, other):
-        """Merges two Fibonacci heaps and returns the resulting heap.
+        """
+        Merges two Fibonacci heaps and returns the resulting heap.
 
         Args:
             other (FibHeap): The other Fibonacci heap to merge with this one.
@@ -203,25 +204,42 @@ class FibHeap:
            raise ValueError("Cannot link y as a child of x because y's priority is lower than x's priority.")
         
 
-    # the consolidate function reduces the number of trees in the rootlist by merging
-    # trees of equal degree together. given two trees x and y in the rootlist with the same degree, 
-    # if x.key <= y.key, the helper function Fib_Link will make y a child of x, thus merging Y with x.
-    # this happens until only trees of distinct degree are in the rootlist.
+   
     def consolidate(self):
-        #need to find a way to store elements from the rootlist 
-        #in the dictionary with their degrees   
+        """
+        Consolidates the trees in the root list of the Fibonacci heap by merging
+        trees of equal degree together. 
+
+        The function iterates through the root list and uses a dictionary to
+        keep track of trees by their degree. If two trees have the same degree,
+        the tree with the higher priority becomes a child of the tree with the 
+        lower priority using the helper function `fib_Link`. This process continues
+        until all trees in the root list have distinct degrees.
+
+        Updates:
+            - The minimum node (mMinimum) in the heap.
+            - The root list of the heap.
+    
+        Raises:
+            None.
+        """
+        # Dictionary to store nodes by their degree 
         nodes = defaultdict(list)
+
+        # initialize variable current as the minimum node
         current = self.rootlist.head 
-        
+
+        # Handle the case where the heap is empty
         if current is None:
             return
         
-        #only one element in the heap
+        # Handle the case where there is only one element in the heap
         if current.prev == current.next == current:
              self.mMinimum = current
              self.rootlist.head = None 
              return  
-         
+
+        # since the list is circular, this avoids visiting a node more than once
         visited_nodes = set()
         
         while current and current not in visited_nodes: 
@@ -230,10 +248,12 @@ class FibHeap:
             x = current
             degree = current.degree
             current = current.next
-            
+
+            # Merge trees of the same degree
             while degree in nodes and nodes[degree] is not None:
                 y = nodes[degree]
-                
+
+                #if x has a higher priority, swap places
                 if x.priority > y.priority:
                     y, x = x, y    
                           
@@ -244,6 +264,7 @@ class FibHeap:
                 
             nodes[degree] = x
             
+        # Reset the minimum node and rebuild the root list    
         self.mMinimum = None
         self.rootlist.head = None
         for trees in nodes.values():
@@ -253,10 +274,7 @@ class FibHeap:
                     self.mMinimum = trees
             
         
-                    
-            
-   
-
+                
 
     #the following procedure extracts the minimum node 
     # from the rootlist in the heap and adds it children
