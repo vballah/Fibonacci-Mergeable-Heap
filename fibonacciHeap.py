@@ -45,9 +45,13 @@ class FibHeap:
         Returns:
             Node: The newly created node.
         """
-        
+        # Check if the key is already in the heap
+        if key in self.key_set:
+            raise ValueError(f"Duplicate key '{key}' is not allowed.")
+            
         priority = self.checkPriority(priority) 
         new_node =  Node(key,priority)
+        self.key_set.add(key)  # Add key to the set
         
         if self.mMinimum is None:
             self.rootlist.add_to_root_list(new_node)   
@@ -451,9 +455,14 @@ class FibHeap:
             ValueError: If x is None or not found in the heap.
         """
         # Decrease the key of node x to positive infinity
-        self.fib_decrease(x, math.inf("inf") )
+         self.fib_decrease(x, float('-inf'))
         
-         # Extract the minimum node, which will remove x from the heap
+        # Extract the minimum node, which will remove x from the heap
         self.extractMin()
+
+        # Remove the node's key from the set
+        if node.key in self.key_set:
+            self.key_set.remove(node.key)
+            print(f"Node with key '{x.key}' has been successfully deleted.")
         
         
