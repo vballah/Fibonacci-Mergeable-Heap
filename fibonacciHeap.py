@@ -26,6 +26,23 @@ class FibHeap:
 
 
     def insert(self, key, priority):
+        """
+            Inserts a new node into the Fibonacci heap.
+
+            This method adds a node with the specified key and priority. If the heap is empty,
+            it creates a singleton tree. Otherwise, it compares the new node's priority with the
+            current minimum and updates the minimum if necessary.
+
+            Args:
+                key: The key associated with the node to be inserted.
+                priority (float): The priority of the node.
+
+            Raises:
+                ValueError: If the provided priority is None or invalid.
+
+            Returns:
+                 Node: The newly created node.
+        """
         priority = self.checkPriority(priority) 
         new_node =  Node(key,priority)
         
@@ -68,27 +85,28 @@ class FibHeap:
 
     #the below function finds the minimum node in the heap in 0(1) time
     def getMin(self):
-        """Returns the minimum priority of the heap.
+         """
+         Retrieves the minimum node from the Fibonacci heap.
+            This operation checks whether the heap is empty and returns the node with the minimum
+            priority.
 
-        Returns:
-        Node: The node with the minimum priority, or None if the heap is empty.
+        Returns:  
+            Node: The node with the minimum priority, or None if the heap is empty.
         """
         if self.isEmpty():
             return None
         return self.mMinimum
     
-    #given two heaps, this operation merges the two heaps
-    #determine the new minimum node for the mergeable trees and
-    # counts the total number of nodes in the new mergeable heap
+   
     def fib_Union(self, other):
         """Merges two Fibonacci heaps and returns the resulting heap.
 
-    Args:
-        other (FibHeap): The other Fibonacci heap to merge with this one.
+        Args:
+            other (FibHeap): The other Fibonacci heap to merge with this one.
 
-    Returns:
-        FibHeap: The merged Fibonacci heap.
-    """
+        Returns:
+            FibHeap: The merged Fibonacci heap.
+        """
         if self.mMinimum is None:
             return other
         
@@ -96,21 +114,22 @@ class FibHeap:
            return self
     
 
-        #link the two list
+        #link the two list in a circular fashion
         self.rootlist.last.next = other.rootlist.head
         other.rootlist.head.prev = self.rootlist.last
         self.rootlist.last = other.rootlist.last
         
         if( other.mMinimum.priority < self.mMinimum.priority):
             self.mMinimum = other.mMinimum
-        
+
+        # increment the count of the nodes in the merge heap
         self.node_count += other.node_count
         
         other.rootlist.head = None
         other.mMinimum = None
         other.node_count = 0
         
-        #return the union pof the two heaps
+        #return self, the new mergeable heap
         return self
     
     def print_union(self):
@@ -125,27 +144,43 @@ class FibHeap:
         visited.add(current)
         
      
-
-   
-    
-    # given two trees of equal degrees in the rootlist, if x.priority <= y.priority,
-    # remove y from the rootlist, make y a child of x, increment x.degree and clears the mark on y.
     def fib_Link(self, y, x):
-        
+        """
+        Links two nodes in a Fibonacci heap by making node y a child of node x.
+
+        This function checks that both nodes are valid and that node y does not 
+        already have a parent. It ensures that node x has a priority less than 
+        or equal to node y's priority before linking. If the conditions are met, 
+        node y is removed from the root list and added to the child list of node x, 
+        and the degree of node x is updated accordingly.
+
+        Args:
+            y (Node): The node to be linked as a child.
+            x (Node): The node to be linked to (parent).
+
+        Raises:
+            ValueError: If either x or y is None.
+            ValueError: If node y already has a parent.
+            ValueError: If node y is not in the root list.
+            ValueError: If x's priority is greater than y's priority.
+
+        """
+        # Check if both x and y are present in the rootlist
         if x is None or y is None:
             raise ValueError("Neither x nor y can be None.")
 
     # Check if y already has a parent
         if y.parent is not None:
             raise ValueError("Node y already has a parent.")
-        
+            
+        # add y in x child list
         x.children.add_to_root_list(y)
-    # Remove y from the root list
+        
+    # Check if y is in the root list
         if self.rootlist.head is None or (y.prev is None and y.next is None):
             raise ValueError("Node y is not in the root list.")
 
     # Check if x's priority is less than or equal to y's priority
-    #nodes with smaller priority will be in the rootlist
         if x.priority <= y.priority:
     
          
