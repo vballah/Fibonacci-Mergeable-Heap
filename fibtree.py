@@ -38,6 +38,19 @@ class Fibtree:
         
         
     def add_to_root_list(self, node):
+        """
+        Add a node to the root list of the Fibonacci heap.
+
+        This function maintains the circular doubly linked structure of the root list.
+        If the root list is empty, it initializes the head and last pointers to the new node.
+        If the root list is not empty, it adds the new node to the end of the list and updates the pointers accordingly.
+
+        Args:
+            node: The node to be added to the root list.
+
+        Returns:
+            None
+        """
          # If the root list is empty, initialize head and last to the new node.
         if not self.head:
             self.head = node
@@ -54,6 +67,23 @@ class Fibtree:
     
     
     def remove_from_root_list(self, node):
+        """
+        Remove a node from the root list of the Fibonacci heap.
+
+        This function handles the removal of a node, adjusting the circular doubly linked 
+        structure of the root list accordingly. If the node to be removed is the only element,
+        both head and last pointers are set to None. If the node is the head, the head pointer
+        is updated to the next node.
+
+        Args:
+            node: The node to be removed from the root list.
+
+        Raises:
+            ValueError: If the list is empty or if the node does not exist in the list.
+
+        Returns:
+            None
+        """
         # Raise an error if trying to remove from an empty list.
         if not self.head:
             raise ValueError("cant remove from empty list")
@@ -78,7 +108,7 @@ class Fibtree:
             node.prev.next = node.next
             node.next.prev = node.prev
             
-                
+        # Clear the pointers of the removed node.       
         node.prev = node.next = None
         node.parent = None
    
