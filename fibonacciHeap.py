@@ -17,12 +17,14 @@ class FibHeap:
         mMinimum (Node): The minimum node in the Fibonacci heap.
         rootlist (Fibtree): The root list containing trees of the heap.
         node_count (int): The total number of nodes in the heap.
+        key_set(set): stores unique keys to avoid duplication
     """
     def __init__(self):
         # Initialize the Fibonacci heap with no minimum node, an empty root list, and zero node count
         self.mMinimum = None   
         self.rootlist = Fibtree() # The root list is managed as a forest of Fibonacci trees
         self.node_count = 0
+        self.key_set = set()  # A set to store unique keys
 
 
     def insert(self, key, priority):
